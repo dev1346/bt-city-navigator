@@ -323,16 +323,16 @@
                     </div>
                 </div>
 
-                <!-- Ollama Settings -->
+                <!-- AI Settings -->
                 <div class="space-y-3">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">AI Configuration (Ollama)</h3>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">AI Configuration (Ollama / OpenAI)</h3>
                     <div class="flex flex-col gap-2">
                         <label for="setupOllamaUrl" class="text-sm font-medium text-slate-700">Server URL</label>
                         <input 
                             type="text" 
                             id="setupOllamaUrl" 
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
-                            placeholder="http://localhost:11434"
+                            placeholder="http://localhost:11434 or https://api.openai.com/v1"
                         >
                     </div>
                     <div class="flex flex-col gap-2">
@@ -341,7 +341,7 @@
                             type="text" 
                             id="setupOllamaModel" 
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
-                            placeholder="gpt-oss:120b-cloud"
+                            placeholder="e.g. llama3, gpt-4o, gpt-3.5-turbo..."
                         >
                     </div>
                     <div class="flex flex-col gap-2">
@@ -805,8 +805,14 @@
                 // Add to history
                 chatMessages.push({ role: 'user', content: question });
 
-                // Calling local Ollama server using /api/chat if possible, or /api/generate with context
-                const response = await fetch(`${appConfig.ollamaUrl}/api/chat`, {
+                // Detect if it's OpenAI or Ollama
+                const isUrlOpenAI = appConfig.ollamaUrl.includes('openai.com');
+                const fetchUrl = isUrlOpenAI 
+                    ? `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`
+                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`;
+
+                // Calling AI server
+                const response = await fetch(fetchUrl, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({
@@ -820,26 +826,34 @@
                 });
 
                 if (!response.ok) {
-                    // Fallback to /api/generate if /api/chat is not supported or fails
-                    const genResponse = await fetch(`${appConfig.ollamaUrl}/api/generate`, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify({
-                            model: appConfig.ollamaModel,
-                            prompt: `${systemPrompt}\n\nUser: ${question}\n\nTour Guide:`,
-                            stream: false
-                        })
-                    });
+                    // Fallback to Ollama /api/generate if /api/chat is not supported (only for non-OpenAI)
+                    if (!isUrlOpenAI) {
+                        const genResponse = await fetch(`${appConfig.ollamaUrl.replace(/\/$/, '')}/api/generate`, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify({
+                                model: appConfig.ollamaModel,
+                                prompt: `${systemPrompt}\n\nUser: ${question}\n\nTour Guide:`,
+                                stream: false
+                            })
+                        });
+                        
+                        if (genResponse.ok) {
+                            const genData = await genResponse.json();
+                            const aiText = genData.response || 'No response from AI.';
+                            appendMessage('assistant', aiText);
+                            chatMessages.push({ role: 'assistant', content: aiText });
+                            aiStatus.innerText = 'Ready.';
+                            return;
+                        }
+                    }
                     
-                    if (!genResponse.ok) throw new Error(`Ollama error: ${genResponse.statusText}`);
-                    
-                    const genData = await genResponse.json();
-                    const aiText = genData.response || 'No response from AI.';
-                    appendMessage('assistant', aiText);
-                    chatMessages.push({ role: 'assistant', content: aiText });
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || response.statusText);
                 } else {
                     const data = await response.json();
-                    const aiText = data.message?.content || 'No response from AI.';
+                    // Handle both OpenAI and Ollama response formats
+                    const aiText = data.choices ? data.choices[0].message.content : (data.message?.content || 'No response from AI.');
                     appendMessage('assistant', aiText);
                     chatMessages.push({ role: 'assistant', content: aiText });
                 }
