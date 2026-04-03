@@ -117,26 +117,37 @@
     </div>
 
     <!-- Header / Search Bar -->
-    <div class="absolute top-6 left-1/2 -translate-x-1/2 z-[1000] w-full max-w-md px-4">
-        <div class="search-container bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
-            <form id="searchForm" class="flex items-center p-2">
-                <div class="flex-1 flex items-center px-3 text-slate-400">
+    <div class="absolute top-6 left-1/2 -translate-x-1/2 z-[1000] w-full max-w-lg px-4">
+        <div class="search-container bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-300 overflow-hidden">
+            <form id="searchForm" class="flex items-center p-2 gap-2">
+                <div class="flex-1 flex items-center px-3 text-slate-500">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     <input
                         id="searchInput"
                         type="text"
-                        placeholder="Search streets in Paris..."
-                        class="w-full bg-transparent border-none focus:outline-none text-slate-800 placeholder-slate-400 py-2 px-3"
+                        placeholder="Search street or landmark..."
+                        class="w-full bg-transparent border-none focus:outline-none text-slate-900 placeholder-slate-500 py-2 px-3 font-medium"
                         autocomplete="off"
                     />
                 </div>
-                <button 
-                    type="submit"
-                    id="searchBtn"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl transition-colors font-medium text-sm disabled:opacity-50"
-                >
-                    Search
-                </button>
+                <div class="flex gap-2 pr-1">
+                    <button 
+                        type="submit"
+                        id="searchBtn"
+                        class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2.5 rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 whitespace-nowrap flex items-center gap-2"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Search
+                    </button>
+                    <button 
+                        type="button"
+                        id="askAiBtn"
+                        class="bg-purple-700 hover:bg-purple-800 text-white px-5 py-2.5 rounded-xl transition-all font-bold text-sm shadow-md active:scale-95 flex items-center gap-2 whitespace-nowrap"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                        Ask
+                    </button>
+                </div>
             </form>
 
             <!-- Search Results Dropdown -->
@@ -149,30 +160,12 @@
     <!-- Map Controls Overlay -->
     <div class="absolute right-6 top-24 z-[1000] flex flex-col gap-3">
         <button
-            id="toggleTransport"
-            class="p-3 rounded-2xl shadow-lg border transition-all flex items-center gap-2 bg-blue-600 border-blue-500 text-white hover:scale-105 active:scale-95"
-            title="Toggle Subway Lines"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-train-front"><path d="M8 3.1V7a4 4 0 0 0 8 0V3.1"/><path d="m9 15-1-1"/><path d="m15 15 1-1"/><path d="M9 19c-2.8 0-5-2.2-5-5V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9c0 2.8-2.2 5-5 5Z"/><path d="m8 19-2 3"/><path d="m16 19 2 3"/></svg>
-            <span class="text-sm font-medium pr-1">Subway</span>
-        </button>
-
-        <button
             id="openListBtn"
             class="p-3 bg-white border border-slate-200 text-slate-600 rounded-2xl shadow-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95"
             title="Manage Saved Locations"
         >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star text-amber-500 fill-amber-500"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <span class="text-sm font-medium pr-1">My List</span>
-        </button>
-
-        <button
-            id="askQuestionBtn"
-            class="p-3 bg-white border border-slate-200 text-slate-600 rounded-2xl shadow-lg transition-all flex items-center gap-2 hover:scale-105 active:scale-95"
-            title="Ask a Question (Ollama)"
-        >
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square text-purple-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            <span class="text-sm font-medium pr-1">Ask AI</span>
         </button>
 
         <button
@@ -207,7 +200,10 @@
         <p id="placeAddress" class="text-sm text-slate-600 mb-4 line-clamp-3">
             Address details go here...
         </p>
-        <div class="flex items-center justify-between">
+        <div id="placeDescription" class="text-xs text-slate-700 mt-3 pt-3 border-t border-slate-100 italic hidden">
+            <!-- AI description will be injected here -->
+        </div>
+        <div class="flex items-center justify-between mt-4">
             <div class="flex items-center gap-2 text-xs font-medium text-blue-600 bg-blue-50 px-3 py-2 rounded-xl w-fit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-info"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
                 <span class="city-name-label">Paris</span>, <span class="country-name-label">France</span>
@@ -257,39 +253,39 @@
 
     <!-- Ask AI Modal -->
     <div id="askAiModal" class="hidden fixed inset-0 z-[2000] modal-overlay flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] fade-in">
-            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+        <div class="bg-slate-900 w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] border border-slate-700 fade-in">
+            <div class="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-950">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900">Ask a Question</h2>
-                    <p class="text-xs text-slate-500 mt-1">Powered by local Ollama server (<span id="aiModelLabel">gpt-oss:120b-cloud</span>)</p>
+                    <h2 class="text-xl font-bold text-white">Tour Guide Chat</h2>
+                    <p class="text-xs text-slate-400 mt-1">High Contrast Mode Active</p>
                 </div>
-                <button id="closeAiModal" class="p-2 hover:bg-slate-200 rounded-full transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text-slate-600"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                <button id="closeAiModal" class="p-2 hover:bg-slate-800 rounded-full transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x text-white"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
-            <div class="flex-1 overflow-y-auto p-6 space-y-4" id="aiModalContent">
-                <div id="aiChatHistory" class="space-y-4">
+            <div class="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-900" id="aiModalContent">
+                <div id="aiChatHistory" class="space-y-6">
                     <!-- Chat messages will be injected here -->
                 </div>
-                <div class="flex flex-col gap-2 pt-4 border-t border-slate-100">
-                    <label for="aiQuestionInput" class="text-xs font-bold text-slate-500 uppercase tracking-widest">Your Question</label>
+                <div class="flex flex-col gap-2 pt-4 border-t border-slate-800">
+                    <label for="aiQuestionInput" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Type your message</label>
                     <textarea 
                         id="aiQuestionInput" 
                         rows="3" 
-                        class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all placeholder-slate-400"
-                        placeholder="Ask anything about the city or your locations..."
+                        class="w-full bg-slate-800 border border-slate-700 rounded-2xl p-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all placeholder-slate-500"
+                        placeholder="Ask about landmarks, history, or directions..."
                     ></textarea>
                 </div>
             </div>
-            <div class="p-6 border-t border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                <div id="aiStatus" class="text-xs text-slate-400 italic"></div>
+            <div class="p-6 border-t border-slate-800 bg-slate-950 flex justify-between items-center">
+                <div id="aiStatus" class="text-xs text-purple-400 font-medium italic"></div>
                 <div class="flex gap-2">
-                    <button id="resetAiBtn" class="px-6 py-2.5 rounded-2xl font-bold text-sm text-slate-600 hover:bg-slate-200 transition-all active:scale-95">
-                        Reset
+                    <button id="resetAiBtn" class="px-6 py-2.5 rounded-2xl font-bold text-sm text-slate-300 hover:bg-slate-800 transition-all active:scale-95 border border-slate-700">
+                        Clear
                     </button>
-                    <button id="sendAiQuestionBtn" class="bg-purple-600 text-white px-8 py-2.5 rounded-2xl font-bold text-sm hover:bg-purple-700 transition-all active:scale-95 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-send"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
-                        Send
+                    <button id="sendAiQuestionBtn" class="bg-purple-600 text-white px-8 py-2.5 rounded-2xl font-bold text-sm hover:bg-purple-500 transition-all active:scale-95 flex items-center gap-2 shadow-lg shadow-purple-900/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                        Ask
                     </button>
                 </div>
             </div>
@@ -323,16 +319,16 @@
                     </div>
                 </div>
 
-                <!-- Ollama Settings -->
+                <!-- AI Settings -->
                 <div class="space-y-3">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">AI Configuration (Ollama)</h3>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">AI Configuration (Ollama / OpenAI)</h3>
                     <div class="flex flex-col gap-2">
                         <label for="setupOllamaUrl" class="text-sm font-medium text-slate-700">Server URL</label>
                         <input 
                             type="text" 
                             id="setupOllamaUrl" 
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
-                            placeholder="http://localhost:11434"
+                            placeholder="https://api.openai.com/v1"
                         >
                     </div>
                     <div class="flex flex-col gap-2">
@@ -341,7 +337,7 @@
                             type="text" 
                             id="setupOllamaModel" 
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
-                            placeholder="gpt-oss:120b-cloud"
+                            placeholder="gpt-4o"
                         >
                     </div>
                     <div class="flex flex-col gap-2">
@@ -412,8 +408,8 @@
         let appConfig = JSON.parse(localStorage.getItem('paris_navigator_config') || JSON.stringify({
             cityName: 'Paris',
             cityCenter: [48.8566, 2.3522],
-            ollamaUrl: 'http://localhost:11434',
-            ollamaModel: 'gpt-oss:120b-cloud',
+            ollamaUrl: 'https://api.openai.com/v1',
+            ollamaModel: 'gpt-4o',
             ollamaKey: '',
             accessCode: ''
         }));
@@ -425,6 +421,21 @@
         let showTransport = true;
         let savedLocations = JSON.parse(localStorage.getItem('paris_saved_locations') || '[]');
         let savedMarkers = [];
+
+        // UI Elements
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const searchBtn = document.getElementById('searchBtn');
+        const askAiBtn = document.getElementById('askAiBtn');
+        const askAiModal = document.getElementById('askAiModal');
+        const aiQuestionInput = document.getElementById('aiQuestionInput');
+        const aiChatHistory = document.getElementById('aiChatHistory');
+        const aiStatus = document.getElementById('aiStatus');
+        const sendAiQuestionBtn = document.getElementById('sendAiQuestionBtn');
+        const aiModalContent = document.getElementById('aiModalContent');
+        let lastSelectedPlace = null;
+        let chatMessages = []; // Store history for context
 
         // Privacy Gate Logic
         function checkPrivacy() {
@@ -462,7 +473,8 @@
         // Initialize Map
         function initMap() {
             map = L.map('map', {
-                zoomControl: false
+                zoomControl: false,
+                doubleClickZoom: false // Disable to handle custom dblclick
             }).setView(appConfig.cityCenter, 13);
 
             // Base Layer
@@ -474,15 +486,150 @@
             transportLayer = L.tileLayer('https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=YOUR_API_KEY', {
                 attribution: '&copy; <a href="https://www.thunderforest.com/">Thunderforest</a> contributors',
                 opacity: 0.7
-            }).addTo(map);
+            }); // Not adding to map by default anymore
 
             L.control.zoom({
                 position: 'bottomright'
             }).addTo(map);
 
+            // Double Click Handler
+            map.on('dblclick', function(e) {
+                handleMapInteraction(e.latlng);
+            });
+
+            // Long Press Handler for Mobile
+            let pressTimer;
+            map.on('mousedown touchstart', function(e) {
+                // Only trigger if it's the map itself being pressed
+                if (e.originalEvent.target.id !== 'map') return;
+                
+                pressTimer = window.setTimeout(function() {
+                    handleMapInteraction(e.latlng);
+                }, 800);
+            });
+
+            map.on('mouseup touchend mousemove touchmove', function() {
+                clearTimeout(pressTimer);
+            });
+
             renderSavedMarkers();
             updateCityUI();
             checkPrivacy();
+        }
+
+        async function handleMapInteraction(latlng) {
+            try {
+                // Reverse geocoding to get address from coordinates
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}&addressdetails=1`);
+                const data = await response.json();
+                if (data && data.place_id) {
+                    selectPlace(data, true); // Mark and trigger AI description
+                }
+            } catch (error) {
+                console.error('Reverse geocoding failed:', error);
+            }
+        }
+
+        function processAiLocation(text) {
+            const locMatch = text.match(/\[LOCATION:\s*([^\]]+)\]/);
+            if (locMatch && locMatch[1]) {
+                const locationName = locMatch[1].trim();
+                console.log('AI suggested location:', locationName);
+                
+                // Automatically put the location in the search field
+                searchInput.value = locationName;
+                
+                // Geocode the location
+                fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName + ', ' + appConfig.cityName)}&limit=1&addressdetails=1`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.length > 0) {
+                            selectPlace(data[0]);
+                        }
+                    })
+                    .catch(err => console.error('Geocoding AI location failed:', err));
+            }
+        }
+
+        // Ask AI Button Logic
+        askAiBtn.onclick = async function() {
+            const query = searchInput.value.trim();
+            if (!query) {
+                askAiModal.classList.remove('hidden');
+                aiQuestionInput.focus();
+                return;
+            }
+
+            // Try to find a place first
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', ' + appConfig.cityName)}&limit=1&addressdetails=1`);
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    // It's a place! Show it and get description in popup
+                    const place = data[0];
+                    selectPlace(place);
+                    getAiDescription(place.display_name.split(',')[0]);
+                    searchInput.value = '';
+                } else {
+                    // Not a place, open the modal as fallback
+                    askAiModal.classList.remove('hidden');
+                    aiQuestionInput.value = query;
+                    sendAiQuestionBtn.click();
+                    searchInput.value = '';
+                }
+            } catch (error) {
+                console.error('Ask AI error:', error);
+                // Fallback to modal
+                askAiModal.classList.remove('hidden');
+                aiQuestionInput.value = query;
+                sendAiQuestionBtn.click();
+                searchInput.value = '';
+            }
+        };
+
+        async function getAiDescription(placeName) {
+            const descEl = document.getElementById('placeDescription');
+            descEl.innerText = 'Getting tour guide description...';
+            descEl.classList.remove('hidden');
+
+            try {
+                const headers = { 'Content-Type': 'application/json' };
+                if (appConfig.ollamaKey) headers['Authorization'] = `Bearer ${appConfig.ollamaKey}`;
+
+                const systemPrompt = `You are a knowledgeable tour guide for ${appConfig.cityName}. 
+                Provide a very short, 1-2 sentence interesting fact or description about the location mentioned. 
+                Keep it concise and engaging.`;
+
+                const isUrlOpenAI = appConfig.ollamaUrl.includes('openai.com');
+                const fetchUrl = isUrlOpenAI 
+                    ? `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`
+                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`;
+
+                const response = await fetch(fetchUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        model: appConfig.ollamaModel,
+                        messages: [
+                            { role: 'system', content: systemPrompt },
+                            { role: 'user', content: `Tell me about ${placeName} in ${appConfig.cityName}.` }
+                        ],
+                        stream: false
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const aiText = data.choices ? data.choices[0].message.content : (data.message?.content || 'No description available.');
+                    descEl.innerText = aiText;
+                } else {
+                    descEl.innerText = 'Tour guide is currently unavailable.';
+                }
+            } catch (error) {
+                console.error('AI Description error:', error);
+                descEl.innerText = 'Could not get description.';
+            }
         }
 
         function updateCityUI(country = 'France') {
@@ -501,7 +648,7 @@
             document.getElementById('aiQuestionInput').placeholder = `Ask your tour guide about ${appConfig.cityName}...`;
             
             // Update search placeholder if needed
-            document.getElementById('searchInput').placeholder = `Search street & house number in ${appConfig.cityName}...`;
+            document.getElementById('searchInput').placeholder = `Search or ask your tour guide...`;
         }
 
         function renderSavedMarkers() {
@@ -518,12 +665,6 @@
         }
 
         // Search Functionality
-        const searchForm = document.getElementById('searchForm');
-        const searchInput = document.getElementById('searchInput');
-        const searchResults = document.getElementById('searchResults');
-        const searchBtn = document.getElementById('searchBtn');
-        let lastSelectedPlace = null;
-
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const query = searchInput.value.trim();
@@ -533,10 +674,23 @@
             searchBtn.innerText = '...';
 
             try {
-                // Use addressdetails=1 to get more structured data
                 const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', ' + appConfig.cityName)}&limit=5&addressdetails=1`);
                 const data = await response.json();
-                displayResults(data);
+                
+                if (data && data.length > 0) {
+                    if (data.length === 1) {
+                        // If only one result, select it and get AI description automatically
+                        selectPlace(data[0], true);
+                        searchInput.value = '';
+                    } else {
+                        // If multiple results, show the list
+                        displayResults(data);
+                    }
+                } else {
+                    // No results found
+                    searchResults.innerHTML = '<div class="p-4 text-sm text-slate-500 italic">No locations found.</div>';
+                    searchResults.classList.remove('hidden');
+                }
             } catch (error) {
                 console.error('Search error:', error);
             } finally {
@@ -578,7 +732,7 @@
                         </div>
                     `;
                     
-                    btn.onclick = () => selectPlace(result);
+                    btn.onclick = () => selectPlace(result, true);
                     searchResults.appendChild(btn);
                 });
             } else {
@@ -586,7 +740,7 @@
             }
         }
 
-        function selectPlace(place) {
+        function selectPlace(place, triggerAi = false) {
             const lat = parseFloat(place.lat);
             const lon = parseFloat(place.lon);
             lastSelectedPlace = place;
@@ -626,6 +780,14 @@
 
             searchResults.classList.add('hidden');
             searchInput.value = name;
+
+            // Clear AI description when selecting a new place
+            document.getElementById('placeDescription').classList.add('hidden');
+            document.getElementById('placeDescription').innerText = '';
+
+            if (triggerAi) {
+                getAiDescription(name);
+            }
         }
 
         // Saved Locations Logic
@@ -727,19 +889,11 @@
         };
 
         // Ask AI Modal Controls
-        const askAiModal = document.getElementById('askAiModal');
-        const aiQuestionInput = document.getElementById('aiQuestionInput');
-        const aiChatHistory = document.getElementById('aiChatHistory');
-        const aiStatus = document.getElementById('aiStatus');
-        const sendAiQuestionBtn = document.getElementById('sendAiQuestionBtn');
-        const aiModalContent = document.getElementById('aiModalContent');
-        let chatMessages = []; // Store history for context
-
-        document.getElementById('askQuestionBtn').onclick = function() {
+        document.getElementById('askQuestionBtn')?.addEventListener('click', function() {
             askAiModal.classList.remove('hidden');
             aiQuestionInput.focus();
             scrollToBottom();
-        };
+        });
 
         document.getElementById('closeAiModal').onclick = function() {
             askAiModal.classList.add('hidden');
@@ -751,23 +905,17 @@
 
         function appendMessage(role, text) {
             const msgDiv = document.createElement('div');
-            msgDiv.className = `p-4 rounded-2xl text-sm leading-relaxed ${
+            // High contrast styles for dark mode modal
+            msgDiv.className = `p-5 rounded-2xl text-sm leading-relaxed shadow-lg ${
                 role === 'user' 
-                ? 'bg-purple-50 border border-purple-100 ml-8 text-purple-900' 
-                : 'bg-slate-50 border border-slate-100 mr-8 text-slate-700'
+                ? 'bg-purple-600 text-white ml-12 border border-purple-400' 
+                : 'bg-slate-800 text-slate-100 mr-12 border border-slate-700'
             }`;
-            
-            const roleLabel = document.createElement('p');
-            roleLabel.className = `text-[10px] font-bold uppercase tracking-widest mb-1 ${
-                role === 'user' ? 'text-purple-400' : 'text-slate-400'
-            }`;
-            roleLabel.innerText = role === 'user' ? 'You' : 'Tour Guide';
             
             const contentDiv = document.createElement('div');
-            contentDiv.className = 'markdown-content';
+            contentDiv.className = 'markdown-content font-medium';
             contentDiv.innerHTML = role === 'user' ? text : marked.parse(text);
             
-            msgDiv.appendChild(roleLabel);
             msgDiv.appendChild(contentDiv);
             aiChatHistory.appendChild(msgDiv);
             scrollToBottom();
@@ -783,6 +931,13 @@
         sendAiQuestionBtn.onclick = async function() {
             const question = aiQuestionInput.value.trim();
             if (!question) return;
+
+            // Check if API key is missing for OpenAI
+            if (appConfig.ollamaUrl.includes('openai.com') && !appConfig.ollamaKey) {
+                alert("Please set your OpenAI API Key in the Setup menu first.");
+                document.getElementById('setupBtn').click();
+                return;
+            }
 
             appendMessage('user', question);
             aiQuestionInput.value = '';
@@ -800,13 +955,21 @@
                 // Prepare system prompt for persona
                 const systemPrompt = `You are a knowledgeable and friendly tour guide for the city of ${appConfig.cityName}. 
                 Your goal is to help visitors discover the best of the city. 
-                Keep your answers concise, helpful, and short.`;
+                Keep your answers concise, helpful, and short.
+                If you mention a specific location or landmark that can be found on a map, please wrap it in square brackets like this: [LOCATION: Name of Place].
+                For example: "You should visit [LOCATION: Eiffel Tower] for a great view."`;
 
                 // Add to history
                 chatMessages.push({ role: 'user', content: question });
 
-                // Calling local Ollama server using /api/chat if possible, or /api/generate with context
-                const response = await fetch(`${appConfig.ollamaUrl}/api/chat`, {
+                // Detect if it's OpenAI or Ollama
+                const isUrlOpenAI = appConfig.ollamaUrl.includes('openai.com');
+                const fetchUrl = isUrlOpenAI 
+                    ? `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`
+                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`;
+
+                // Calling AI server
+                const response = await fetch(fetchUrl, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({
@@ -820,28 +983,38 @@
                 });
 
                 if (!response.ok) {
-                    // Fallback to /api/generate if /api/chat is not supported or fails
-                    const genResponse = await fetch(`${appConfig.ollamaUrl}/api/generate`, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify({
-                            model: appConfig.ollamaModel,
-                            prompt: `${systemPrompt}\n\nUser: ${question}\n\nTour Guide:`,
-                            stream: false
-                        })
-                    });
+                    // Fallback to Ollama /api/generate if /api/chat is not supported (only for non-OpenAI)
+                    if (!isUrlOpenAI) {
+                        const genResponse = await fetch(`${appConfig.ollamaUrl.replace(/\/$/, '')}/api/generate`, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify({
+                                model: appConfig.ollamaModel,
+                                prompt: `${systemPrompt}\n\nUser: ${question}\n\nTour Guide:`,
+                                stream: false
+                            })
+                        });
+                        
+                        if (genResponse.ok) {
+                            const genData = await genResponse.json();
+                            const aiText = genData.response || 'No response from AI.';
+                            appendMessage('assistant', aiText);
+                            chatMessages.push({ role: 'assistant', content: aiText });
+                            processAiLocation(aiText);
+                            aiStatus.innerText = 'Ready.';
+                            return;
+                        }
+                    }
                     
-                    if (!genResponse.ok) throw new Error(`Ollama error: ${genResponse.statusText}`);
-                    
-                    const genData = await genResponse.json();
-                    const aiText = genData.response || 'No response from AI.';
-                    appendMessage('assistant', aiText);
-                    chatMessages.push({ role: 'assistant', content: aiText });
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.error?.message || response.statusText);
                 } else {
                     const data = await response.json();
-                    const aiText = data.message?.content || 'No response from AI.';
+                    // Handle both OpenAI and Ollama response formats
+                    const aiText = data.choices ? data.choices[0].message.content : (data.message?.content || 'No response from AI.');
                     appendMessage('assistant', aiText);
                     chatMessages.push({ role: 'assistant', content: aiText });
+                    processAiLocation(aiText);
                 }
                 
                 aiStatus.innerText = 'Ready.';
@@ -1006,21 +1179,8 @@
         };
 
         // Controls
-        document.getElementById('toggleTransport').onclick = function() {
-            showTransport = !showTransport;
-            if (showTransport) {
-                transportLayer.addTo(map);
-                this.classList.add('bg-blue-600', 'border-blue-500', 'text-white');
-                this.classList.remove('bg-white', 'border-slate-200', 'text-slate-600');
-            } else {
-                map.removeLayer(transportLayer);
-                this.classList.remove('bg-blue-600', 'border-blue-500', 'text-white');
-                this.classList.add('bg-white', 'border-slate-200', 'text-slate-600');
-            }
-        };
-
         document.getElementById('resetBtn').onclick = function() {
-            map.setView(PARIS_CENTER, 13);
+            map.setView(appConfig.cityCenter, 13);
             if (currentMarker) map.removeLayer(currentMarker);
             document.getElementById('infoPanel').classList.add('hidden');
             searchInput.value = '';
