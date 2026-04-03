@@ -642,7 +642,21 @@
             try {
                 const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', ' + appConfig.cityName)}&limit=5&addressdetails=1`);
                 const data = await response.json();
-                displayResults(data);
+                
+                if (data && data.length > 0) {
+                    if (data.length === 1) {
+                        // If only one result, select it and get AI description automatically
+                        selectPlace(data[0], true);
+                        searchInput.value = '';
+                    } else {
+                        // If multiple results, show the list
+                        displayResults(data);
+                    }
+                } else {
+                    // No results found
+                    searchResults.innerHTML = '<div class="p-4 text-sm text-slate-500 italic">No locations found.</div>';
+                    searchResults.classList.remove('hidden');
+                }
             } catch (error) {
                 console.error('Search error:', error);
             } finally {
