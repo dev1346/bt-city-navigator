@@ -1,0 +1,5 @@
+{
+  "name": "BT City Navigator",
+  "description": "An interactive city navigator featuring roads, subway lines, street search, and AI-powered tour guide.",
+  "requestFramePermissions": ["geolocation"]
+}
