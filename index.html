@@ -604,7 +604,8 @@
                 const isUrlOpenAI = appConfig.ollamaUrl.includes('openai.com');
                 const fetchUrl = isUrlOpenAI 
                     ? `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`
-                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`;
+                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`;
+                    /* : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`; */
 
                 const response = await fetch(fetchUrl, {
                     method: 'POST',
@@ -966,7 +967,8 @@
                 const isUrlOpenAI = appConfig.ollamaUrl.includes('openai.com');
                 const fetchUrl = isUrlOpenAI 
                     ? `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`
-                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`;
+                    : `${appConfig.ollamaUrl.replace(/\/$/, '')}/chat/completions`;
+                    /* : `${appConfig.ollamaUrl.replace(/\/$/, '')}/api/chat`; */
 
                 // Calling AI server
                 const response = await fetch(fetchUrl, {
